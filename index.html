@@ -2,7 +2,11 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Acesso Restrito</title>
+    <title>Acesso Restrito - MFS BRÁS</title>
+    
+    <!-- Ajustado para logo.png -->
+    <link rel="icon" type="image/png" href="logo.png">
+    
     <style>
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
@@ -29,7 +33,7 @@
         /* CAIXA DE LOGIN */
         .login-box { 
             background: rgba(20, 22, 39, 0.9); 
-            padding: 40px 30px; 
+            padding: 35px 30px 40px 30px; 
             border-radius: 12px; 
             text-align: center; 
             width: 320px; 
@@ -37,6 +41,18 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(6px); 
             transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        /* LOGO MFS BRÁS */
+        .logo-container {
+            margin-bottom: 20px;
+        }
+        
+        .logo-container img {
+            width: 160px; 
+            height: auto;
+            mix-blend-mode: screen; 
+            filter: drop-shadow(0px 0px 8px rgba(181, 53, 246, 0.3));
         }
 
         #relogio {
@@ -119,7 +135,6 @@
             opacity: 0.8;
         }
 
-        /* EFEITO DE DESCRIPTOGRAFIA NO BOTÃO */
         .btn-loading {
             background-color: #00d2ff !important;
             color: #090B10 !important;
@@ -136,7 +151,6 @@
             white-space: pre-wrap;
         }
 
-        /* ANIMAÇÃO DE ALERTA DE INVASÃO PISCANTE */
         @keyframes piscarVermelho {
             0% { color: #ff3366; text-shadow: 0 0 10px #ff3366; }
             50% { color: #4a0011; text-shadow: none; }
@@ -150,7 +164,7 @@
         }
 
         /* =========================================
-           TELA DO HUB DE ARQUIVOS COM ROLAGEM
+           TELA DO HUB DE ARQUIVOS
            ========================================= */
         #hubBox {
             display: none; 
@@ -237,6 +251,20 @@
             color: #ffffff;
             box-shadow: 0 0 15px rgba(255, 51, 102, 0.4);
         }
+
+        /* =========================================
+           RODAPÉ DE DESENVOLVEDOR
+           ========================================= */
+        .footer-creditos {
+            position: fixed;
+            bottom: 15px;
+            font-size: 10px;
+            color: #64748b;
+            font-family: monospace;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            z-index: 10;
+        }
     </style>
 </head>
 <body>
@@ -244,6 +272,13 @@
 
     <!-- TELA 1: LOGIN -->
     <div class="login-box" id="loginBox">
+        
+        <!-- LOGOMARCA MFS BRÁS -->
+        <div class="logo-container">
+            <!-- Ajustado para logo.png -->
+            <img src="logo.png" alt="MFS BRÁS Logo">
+        </div>
+
         <div id="relogio">00:00:00</div>
         <div id="saudacao"></div>
         
@@ -339,6 +374,11 @@
         <button class="btn-sair" onclick="bloquearSistema()">[ ENCERRAR SESSÃO ]</button>
     </div>
 
+    <!-- ASSINATURA DE DESENVOLVIMENTO -->
+    <div class="footer-creditos">
+        Desenvolvido por Matheus Brás © 2026
+    </div>
+
     <script>
         // ==========================================
         // LÓGICA DO FUNDO MATRIX
@@ -353,14 +393,12 @@
         const drops = [];
         for (let x = 0; x < colunas; x++) { drops[x] = 1; }
 
-        // Variável de cor da chuva Matrix
-        let matrixColor = 'rgba(181, 53, 246, 0.4)'; // Roxo padrão
+        let matrixColor = 'rgba(181, 53, 246, 0.4)'; 
 
         function desenharMatrix() {
             ctx.fillStyle = 'rgba(9, 11, 16, 0.1)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            // Usa a variável de cor que muda no bloqueio
             ctx.fillStyle = matrixColor; 
             ctx.font = fontSize + 'px monospace';
             
@@ -442,12 +480,12 @@
             let velocidade = isDeleting ? 40 : 80;
 
             if (!isDeleting && charIndex === textoAtual.length) {
-                velocidade = 2000; // Pausa quando termina de digitar
+                velocidade = 2000; 
                 isDeleting = true;
             } else if (isDeleting && charIndex === 0) {
                 isDeleting = false;
                 pIndex = (pIndex + 1) % frasesPlaceholder.length;
-                velocidade = 500; // Pausa antes de começar a próxima
+                velocidade = 500; 
             }
 
             typeTimeout = setTimeout(animarPlaceholder, velocidade);
@@ -492,19 +530,17 @@
                 btn.innerText = `[ Descriptografando... ${progresso}% ]`;
                 
                 let intervaloLoading = setInterval(() => {
-                    progresso += Math.floor(Math.random() * 15) + 5; // Pulos aleatórios
+                    progresso += Math.floor(Math.random() * 15) + 5; 
                     
                     if (progresso >= 100) {
                         progresso = 100;
                         clearInterval(intervaloLoading);
                         btn.innerText = `[ ACESSO LIBERADO ]`;
                         
-                        // Aguarda meio segundo e abre o Hub
                         setTimeout(() => {
                             document.getElementById('loginBox').style.display = 'none';
                             document.getElementById('hubBox').style.display = 'block';
                             
-                            // Reseta o botão pro estado original
                             inputSenha.value = ''; 
                             inputSenha.disabled = false;
                             btn.disabled = false;
@@ -535,11 +571,12 @@
 
         function iniciarLockdown() {
             sistemaBloqueado = true;
-            matrixColor = 'rgba(255, 51, 102, 0.5)'; // Matrix fica vermelha
+            matrixColor = 'rgba(255, 51, 102, 0.5)'; 
             
             document.getElementById('senha').disabled = true;
             document.getElementById('btnAcessar').disabled = true;
-            document.getElementById('relogio').style.display = 'none'; // Esconde relógio
+            document.getElementById('relogio').style.display = 'none'; 
+            document.querySelector('.logo-container').style.display = 'none'; 
             
             var erro = document.getElementById('erro');
             erro.style.display = 'block';
@@ -563,11 +600,12 @@
         function liberarLockdown() {
             sistemaBloqueado = false;
             tentativasErradas = 0;
-            matrixColor = 'rgba(181, 53, 246, 0.4)'; // Volta Matrix para Roxo
+            matrixColor = 'rgba(181, 53, 246, 0.4)'; 
             
             document.getElementById('senha').disabled = false;
             document.getElementById('btnAcessar').disabled = false;
-            document.getElementById('relogio').style.display = 'block'; // Mostra relógio
+            document.getElementById('relogio').style.display = 'block'; 
+            document.querySelector('.logo-container').style.display = 'block'; 
             
             var erro = document.getElementById('erro');
             erro.classList.remove('alerta-invasao');
@@ -575,7 +613,6 @@
             
             document.getElementById('senha').focus();
             
-            // Retoma a animação do campo de texto
             clearTimeout(typeTimeout);
             animarPlaceholder();
         }
@@ -591,7 +628,7 @@
             atualizarRelogio();
             setInterval(atualizarRelogio, 1000); 
             definirSaudacao(); 
-            animarPlaceholder(); // Inicia o texto fantasma
+            animarPlaceholder(); 
 
             document.getElementById("btnAcessar").addEventListener("click", verificarSenha);
             document.getElementById("senha").addEventListener("keypress", function(event) {
