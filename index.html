@@ -13,7 +13,7 @@
             height: 100vh; 
             margin: 0; 
             color: #e0e0e0;
-            background-color: #050505; 
+            background-color: #090B10; 
             overflow: hidden; 
         }
 
@@ -28,14 +28,14 @@
 
         /* CAIXA DE LOGIN */
         .login-box { 
-            background: rgba(21, 21, 21, 0.9); 
+            background: rgba(20, 22, 39, 0.9); 
             padding: 40px 30px; 
-            border-radius: 8px; 
+            border-radius: 12px; 
             text-align: center; 
             width: 320px; 
-            border: 1px solid #2a2a2a;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(4px); 
+            border: 1px solid #232743;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(6px); 
             transition: opacity 0.5s ease, transform 0.5s ease;
         }
 
@@ -50,7 +50,7 @@
 
         #saudacao {
             font-size: 13px;
-            color: #00ff88; 
+            color: #b535f6; 
             margin-bottom: 25px;
             min-height: 40px; 
             font-family: monospace;
@@ -66,17 +66,19 @@
 
         input { 
             padding: 12px 40px 12px 12px; 
-            border: 1px solid #333; 
-            border-radius: 4px; 
+            border: 1px solid #232743; 
+            border-radius: 6px; 
             width: 100%; 
-            background-color: #1e1e1e; 
+            background-color: #090B10; 
             color: #ffffff;
             box-sizing: border-box;
             transition: border-color 0.3s;
+            font-family: monospace;
         }
         
-        input::placeholder { color: #666; }
-        input:focus { outline: none; border-color: #555; }
+        input::placeholder { color: #64748b; }
+        input:focus { outline: none; border-color: #b535f6; }
+        input:disabled { background-color: #1a1a24; color: #444; cursor: not-allowed; }
         
         .toggle-senha {
             position: absolute;
@@ -84,19 +86,20 @@
             top: 50%;
             transform: translateY(-50%);
             cursor: pointer;
-            color: #888;
+            color: #64748b;
             font-size: 18px;
             user-select: none;
+            transition: color 0.3s;
         }
 
         .toggle-senha:hover { color: #fff; }
 
         button { 
             padding: 12px 20px; 
-            background-color: #2a2a2a; 
+            background-color: #b535f6; 
             color: #ffffff; 
-            border: 1px solid #444; 
-            border-radius: 4px; 
+            border: 1px solid transparent; 
+            border-radius: 6px; 
             cursor: pointer; 
             font-weight: bold; 
             width: 100%; 
@@ -105,19 +108,45 @@
             transition: all 0.3s ease;
         }
         
-        button:hover { 
-            background-color: #00ff88; 
-            color: #000;
-            border-color: #00ff88;
-            box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+        button:hover:not(:disabled) { 
+            background-color: #c95cff; 
+            box-shadow: 0 0 15px rgba(181, 53, 246, 0.4);
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        /* EFEITO DE DESCRIPTOGRAFIA NO BOTÃO */
+        .btn-loading {
+            background-color: #00d2ff !important;
+            color: #090B10 !important;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.6) !important;
+            border-color: #00d2ff !important;
         }
         
         #erro { 
-            color: #ff3333; 
+            color: #ff3366; 
             display: none; 
             margin-top: 15px; 
             font-size: 13px; 
             font-family: monospace;
+            white-space: pre-wrap;
+        }
+
+        /* ANIMAÇÃO DE ALERTA DE INVASÃO PISCANTE */
+        @keyframes piscarVermelho {
+            0% { color: #ff3366; text-shadow: 0 0 10px #ff3366; }
+            50% { color: #4a0011; text-shadow: none; }
+            100% { color: #ff3366; text-shadow: 0 0 10px #ff3366; }
+        }
+        
+        .alerta-invasao {
+            font-size: 14px !important;
+            font-weight: bold;
+            animation: piscarVermelho 1s infinite;
         }
 
         /* =========================================
@@ -125,86 +154,58 @@
            ========================================= */
         #hubBox {
             display: none; 
-            background: rgba(21, 21, 21, 0.9); 
+            background: rgba(20, 22, 39, 0.95); 
             padding: 30px 40px; 
-            border-radius: 8px; 
+            border-radius: 12px; 
             text-align: center; 
-            width: 750px; /* Mais largo para a grade de botões */
+            width: 750px; 
             max-width: 90%;
-            max-height: 85vh; /* Limita a altura para não sumir da tela */
-            overflow-y: auto; /* Adiciona barra de rolagem */
-            border: 1px solid #2a2a2a;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(4px); 
+            max-height: 85vh; 
+            overflow-y: auto; 
+            border: 1px solid #232743;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(6px); 
             animation: surgir 0.5s ease;
         }
 
-        /* Estilização da barra de rolagem do Matrix */
-        #hubBox::-webkit-scrollbar {
-            width: 8px;
-        }
-        #hubBox::-webkit-scrollbar-track {
-            background: #111; 
-            border-radius: 4px;
-        }
-        #hubBox::-webkit-scrollbar-thumb {
-            background: #333; 
-            border-radius: 4px;
-        }
-        #hubBox::-webkit-scrollbar-thumb:hover {
-            background: #00ff88; 
-        }
+        #hubBox::-webkit-scrollbar { width: 8px; }
+        #hubBox::-webkit-scrollbar-track { background: #090B10; border-radius: 4px; }
+        #hubBox::-webkit-scrollbar-thumb { background: #232743; border-radius: 4px; }
+        #hubBox::-webkit-scrollbar-thumb:hover { background: #b535f6; }
 
         @keyframes surgir {
             from { opacity: 0; transform: scale(0.9); }
             to { opacity: 1; transform: scale(1); }
         }
 
-        .hub-header h3 {
-            color: #00ff88;
-            font-family: monospace;
-            margin-top: 0;
-            margin-bottom: 5px;
-            letter-spacing: 1px;
-        }
+        .hub-header h3 { color: #b535f6; font-family: monospace; margin-top: 0; margin-bottom: 5px; letter-spacing: 1px; }
+        .hub-header p { color: #94a3b8; font-size: 13px; margin-bottom: 20px; }
 
-        .hub-header p {
-            color: #888;
-            font-size: 13px;
-            margin-bottom: 20px;
-        }
-
-        /* Títulos das Categorias */
         .section-title {
-            color: #00ff88;
+            color: #00d2ff;
             font-family: monospace;
             font-size: 15px;
             text-align: left;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid #232743;
             padding-bottom: 8px;
             margin: 30px 0 15px 0;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
+        .section-title:first-of-type { margin-top: 10px; }
 
-        .section-title:first-of-type {
-            margin-top: 10px; /* Reduz margem do primeiro título */
-        }
-
-        /* Grade Inteligente (Responsive Grid) */
         .grid-botoes {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 12px;
         }
 
-        /* Estilo dos botões menores e organizados */
         .btn-arquivo {
-            background-color: #1a1a1a;
-            color: #e0e0e0;
-            border: 1px solid #333;
+            background-color: #141627;
+            color: #e2e8f0;
+            border: 1px solid #232743;
             padding: 12px 10px;
-            border-radius: 6px;
+            border-radius: 8px;
             text-decoration: none;
             font-family: monospace;
             font-size: 11px;
@@ -216,32 +217,25 @@
             text-align: left;
             word-break: break-word;
         }
-
-        .btn-arquivo span {
-            font-size: 16px;
-            flex-shrink: 0;
-        }
-
+        .btn-arquivo span { font-size: 16px; flex-shrink: 0; }
         .btn-arquivo:hover {
-            background-color: #00ff88;
-            color: #000;
-            border-color: #00ff88;
+            background-color: #232743;
+            color: #ffffff;
+            border-color: #00d2ff;
             transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(0, 255, 136, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 210, 255, 0.15);
         }
 
-        /* Botão vermelho de sair */
         .btn-sair {
             background-color: transparent;
-            color: #ff3333;
-            border: 1px solid #ff3333;
+            color: #ff3366;
+            border: 1px solid #ff3366;
             margin-top: 40px;
         }
-
         .btn-sair:hover {
-            background-color: #ff3333;
-            color: #000;
-            box-shadow: 0 0 10px rgba(255, 51, 51, 0.4);
+            background-color: #ff3366;
+            color: #ffffff;
+            box-shadow: 0 0 15px rgba(255, 51, 102, 0.4);
         }
     </style>
 </head>
@@ -254,73 +248,101 @@
         <div id="saudacao"></div>
         
         <div class="input-container">
-            <input type="password" id="senha" placeholder="Chave de acesso" autofocus>
+            <input type="password" id="senha" placeholder="Chave de acesso_" autofocus>
             <span class="toggle-senha" id="olho" onclick="alternarSenha()">👁️</span>
         </div>
         
         <button id="btnAcessar">Autenticar</button>
-        <div id="erro">> ACESSO NEGADO: Credenciais inválidas.</div>
+        <div id="erro">> ACESSO NEGADO</div>
     </div>
 
     <!-- TELA 2: HUB DE ARQUIVOS -->
     <div id="hubBox">
         <div class="hub-header">
             <h3>> ACESSO CONCEDIDO_</h3>
-            <p>Repositório de ferramentas e sistemas operacionais</p>
+            <p>Repositório central de ferramentas e sistemas operacionais</p>
         </div>
 
-        <!-- CATEGORIA 1: PROGRAMAS -->
-        <div class="section-title">📁 Programas Essenciais</div>
+        <!-- CATEGORIA: DESIGN E IMAGEM -->
+        <div class="section-title">🎨 Design e Edição de Imagem</div>
         <div class="grid-botoes">
             <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🎨</span> ADOBE ILLUSTRATOR 2022</a>
             <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🖼️</span> ADOBE PHOTOSHOP 2020</a>
             <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🖼️</span> ADOBE PHOTOSHOP 2023</a>
             <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🖼️</span> ADOBE PHOTOSHOP CC 2015</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🖌️</span> CANVA DESKTOP</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>📸</span> PHOTO SCAPE</a>
+        </div>
+
+        <!-- CATEGORIA: EDIÇÃO DE VÍDEO -->
+        <div class="section-title">🎬 Vídeo e Multimídia</div>
+        <div class="grid-botoes">
             <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🎬</span> ADOBE PREMIERE PRO 2022</a>
             <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🎬</span> ADOBE PREMIERE PRO 2026</a>
-            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>📕</span> ADOBE READER PDF</a>
-            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>⚙️</span> ALL IN ONE RUNTIMES</a>
-            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🔑</span> ATIVADOR WINDOWS</a>
-            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🖌️</span> CANVA DESKTOP</a>
-            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>💻</span> CPU-Z</a>
-            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>💽</span> CRYSTAL DISK INFO</a>
-            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🌐</span> DRIVERPACK OFFLINE REDES</a>
-            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🌐</span> DRIVERPACK ONLINE</a>
-            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🗄️</span> EASEUS PARTITION MASTER</a>
-            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🦊</span> FOXIT READER PDF</a>
-            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🌍</span> GOOGLE CHROME OFFLINE</a>
-            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🌡️</span> HW MONITOR TEMP</a>
-            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>⬇️</span> INTERNET DOWNLOAD MANAGER IDM</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🎞️</span> VEGAS PRO 18</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>▶️</span> VLC PLAYER</a>
+        </div>
+
+        <!-- CATEGORIA: ESCRITÓRIO E PDF -->
+        <div class="section-title">📊 Pacote Office e Leitores PDF</div>
+        <div class="grid-botoes">
             <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>📊</span> MICROSOFT OFFICE 2007</a>
             <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>📊</span> MICROSOFT OFFICE 2016</a>
             <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>📊</span> MICROSOFT OFFICE 2024</a>
-            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🔥</span> MSI AFTER BURNER</a>
-            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>📸</span> PHOTO SCAPE</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>📕</span> ADOBE READER PDF</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🦊</span> FOXIT READER PDF</a>
+        </div>
+
+        <!-- CATEGORIA: UTILITÁRIOS DE SISTEMA -->
+        <div class="section-title">🛠️ Utilitários de Sistema</div>
+        <div class="grid-botoes">
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>⚙️</span> ALL IN ONE RUNTIMES</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🔑</span> ATIVADOR WINDOWS</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🌐</span> DRIVERPACK OFFLINE REDES</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🌐</span> DRIVERPACK ONLINE</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🗄️</span> EASEUS PARTITION MASTER</a>
             <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>💿</span> RUFUS</a>
-            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🎞️</span> VEGAS PRO 18</a>
-            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>▶️</span> VLC PLAYER</a>
             <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>📚</span> WINRAR CRACKEADO</a>
             <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>📦</span> WINRAR SETUP</a>
         </div>
 
-        <!-- CATEGORIA 2: SISTEMAS OPERACIONAIS -->
+        <!-- CATEGORIA: HARDWARE E MONITORAMENTO -->
+        <div class="section-title">🌡️ Hardware e Monitoramento</div>
+        <div class="grid-botoes">
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>💻</span> CPU-Z</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>💽</span> CRYSTAL DISK INFO</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🌡️</span> HW MONITOR TEMP</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🔥</span> MSI AFTER BURNER</a>
+        </div>
+
+        <!-- CATEGORIA: INTERNET -->
+        <div class="section-title">🌍 Internet e Downloads</div>
+        <div class="grid-botoes">
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🌍</span> GOOGLE CHROME OFFLINE</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>⬇️</span> INTERNET DOWNLOAD MANAGER IDM</a>
+        </div>
+
+        <!-- CATEGORIA: SISTEMAS OPERACIONAIS -->
         <div class="section-title">💻 Sistemas Operacionais</div>
         <div class="grid-botoes">
             <a href="https://drive.usercontent.google.com/download?id=1fzRYOtgc-Yz4JgcdaKQzfwJUPhK8ojMx&export=download&authuser=0" target="_blank" class="btn-arquivo"><span>🐧</span> LINUX MINT 22.3 CINNAMON</a>
             <a href="https://drive.usercontent.google.com/download?id=1wTmYmmCP32iUonxgxnLZP099yrMsf7ZR&export=download&authuser=0" target="_blank" class="btn-arquivo"><span>🐧</span> LINUX UBUNTU 26.04</a>
-            <a href="https://drive.usercontent.google.com/download?id=1ccCcpJyYEU9Rrsse8dkDKhtSIRMWyK9W&export=download&authuser=0" target="_blank" class="btn-arquivo"><span>🪟</span> WINDOWS 7</a>
-            <a href="https://drive.usercontent.google.com/download?id=1nPMgwry2C6_uuHZ-qEODnqarquWwypUA&export=download&authuser=0" target="_blank" class="btn-arquivo"><span>🪟</span> WINDOWS 8.1</a>
-            <a href="https://drive.usercontent.google.com/download?id=10N5hXXU3rMnuONvxWWLMMODduKqvFiI7&export=download&authuser=0" target="_blank" class="btn-arquivo"><span>🪟</span> WINDOWS 10 LITE</a>
-            <a href="https://drive.usercontent.google.com/download?id=1Mz29eedRHiAhmTYc2gvTc0yqCiZ8bjTH&export=download&authuser=0" target="_blank" class="btn-arquivo"><span>🪟</span> WINDOWS 10</a>
-            <a href="https://drive.usercontent.google.com/download?id=1ulVf1jiOJghNkSvnGFXb4XYarh9Tj8Lf&export=download&authuser=0" target="_blank" class="btn-arquivo"><span>🪟</span> WINDOWS 11 PRO</a>
-            <a href="https://drive.usercontent.google.com/download?id=1cJCrk-ezwn5hmXajNCqzAVqV39hvgrYP&export=download&authuser=0" target="_blank" class="btn-arquivo"><span>🪟</span> WINDOWS REUNION 7</a>
-            <a href="https://drive.usercontent.google.com/download?id=1K20PdG7-rK1BAvijOZ6HkCqZtIx8AQkq&export=download&authuser=0" target="_blank" class="btn-arquivo"><span>🪟</span> WINDOWS XP SP3</a>
+            <a href="https://drive.usercontent.google.com/download?id=1ccCcpJyYEU9Rrsse8dkDKhtSIRMWyK9W&export=download&authuser=0" target="_blank" class="btn-arquivo"><span>🖥️</span> WINDOWS 7</a>
+            <a href="https://drive.usercontent.google.com/download?id=1nPMgwry2C6_uuHZ-qEODnqarquWwypUA&export=download&authuser=0" target="_blank" class="btn-arquivo"><span>🖥️</span> WINDOWS 8.1</a>
+            <a href="https://drive.usercontent.google.com/download?id=10N5hXXU3rMnuONvxWWLMMODduKqvFiI7&export=download&authuser=0" target="_blank" class="btn-arquivo"><span>🖥️</span> WINDOWS 10 LITE</a>
+            <a href="https://drive.usercontent.google.com/download?id=1Mz29eedRHiAhmTYc2gvTc0yqCiZ8bjTH&export=download&authuser=0" target="_blank" class="btn-arquivo"><span>🖥️</span> WINDOWS 10</a>
+            <a href="https://drive.usercontent.google.com/download?id=1ulVf1jiOJghNkSvnGFXb4XYarh9Tj8Lf&export=download&authuser=0" target="_blank" class="btn-arquivo"><span>🖥️</span> WINDOWS 11 PRO</a>
+            <a href="https://drive.usercontent.google.com/download?id=1cJCrk-ezwn5hmXajNCqzAVqV39hvgrYP&export=download&authuser=0" target="_blank" class="btn-arquivo"><span>🖥️</span> WINDOWS REUNION 7</a>
+            <a href="https://drive.usercontent.google.com/download?id=1K20PdG7-rK1BAvijOZ6HkCqZtIx8AQkq&export=download&authuser=0" target="_blank" class="btn-arquivo"><span>🖥️</span> WINDOWS XP SP3</a>
         </div>
 
         <button class="btn-sair" onclick="bloquearSistema()">[ ENCERRAR SESSÃO ]</button>
     </div>
 
     <script>
+        // ==========================================
+        // LÓGICA DO FUNDO MATRIX
+        // ==========================================
         const canvas = document.getElementById('matrixCanvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
@@ -331,10 +353,15 @@
         const drops = [];
         for (let x = 0; x < colunas; x++) { drops[x] = 1; }
 
+        // Variável de cor da chuva Matrix
+        let matrixColor = 'rgba(181, 53, 246, 0.4)'; // Roxo padrão
+
         function desenharMatrix() {
-            ctx.fillStyle = 'rgba(5, 5, 5, 0.1)';
+            ctx.fillStyle = 'rgba(9, 11, 16, 0.1)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = 'rgba(0, 255, 136, 0.4)'; 
+            
+            // Usa a variável de cor que muda no bloqueio
+            ctx.fillStyle = matrixColor; 
             ctx.font = fontSize + 'px monospace';
             
             for (let i = 0; i < drops.length; i++) {
@@ -352,6 +379,9 @@
             canvas.height = window.innerHeight;
         });
         
+        // ==========================================
+        // RELÓGIO E SAUDAÇÃO
+        // ==========================================
         function atualizarRelogio() {
             var agora = new Date();
             var h = agora.getHours().toString().padStart(2, '0');
@@ -366,11 +396,11 @@
         function definirSaudacao() {
             var horas = new Date().getHours();
             if (horas >= 5 && horas < 12) {
-                textoSaudacao = "> Bom dia!\n> Aguardando autenticação_";
+                textoSaudacao = "> Bom dia!\n> Sistema operando online_";
             } else if (horas >= 12 && horas < 18) {
-                textoSaudacao = "> Boa tarde!\n> Aguardando autenticação_";
+                textoSaudacao = "> Boa tarde!\n> Sistema operando online_";
             } else {
-                textoSaudacao = "> Boa noite!\n> Aguardando autenticação_";
+                textoSaudacao = "> Boa noite!\n> Sistema operando online_";
             }
             digitarTexto();
         }
@@ -383,37 +413,177 @@
             }
         }
 
+        // ==========================================
+        // TEXTO FANTASMA NO CAMPO DE SENHA
+        // ==========================================
+        const frasesPlaceholder = ["Chave de acesso_", "Insira a credencial_", "Aguardando input_"];
+        let pIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typeTimeout;
+        
+        function animarPlaceholder() {
+            if (sistemaBloqueado) {
+                document.getElementById('senha').placeholder = "[ BLOQUEADO ]";
+                return;
+            }
+
+            const textoAtual = frasesPlaceholder[pIndex];
+            const campoSenha = document.getElementById('senha');
+            
+            if (isDeleting) {
+                campoSenha.placeholder = textoAtual.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                campoSenha.placeholder = textoAtual.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let velocidade = isDeleting ? 40 : 80;
+
+            if (!isDeleting && charIndex === textoAtual.length) {
+                velocidade = 2000; // Pausa quando termina de digitar
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                pIndex = (pIndex + 1) % frasesPlaceholder.length;
+                velocidade = 500; // Pausa antes de começar a próxima
+            }
+
+            typeTimeout = setTimeout(animarPlaceholder, velocidade);
+        }
+
         function alternarSenha() {
             var campoSenha = document.getElementById("senha");
             var iconeOlho = document.getElementById("olho");
             if (campoSenha.type === "password") {
                 campoSenha.type = "text";
-                iconeOlho.style.color = "#00ff88"; 
+                iconeOlho.style.color = "#b535f6"; 
             } else {
                 campoSenha.type = "password";
-                iconeOlho.style.color = "#888"; 
+                iconeOlho.style.color = "#64748b"; 
             }
         }
 
+        // ==========================================
+        // MECÂNICAS DE SEGURANÇA E ANIMAÇÃO
+        // ==========================================
+        let tentativasErradas = 0;
+        let sistemaBloqueado = false;
+
         function verificarSenha() {
+            if (sistemaBloqueado) return;
+
             var senhaDigitada = document.getElementById('senha').value;
+            var btn = document.getElementById('btnAcessar');
+            var erro = document.getElementById('erro');
+            var inputSenha = document.getElementById('senha');
             
             // SENHA DEFINIDA AQUI: 12345
             if (senhaDigitada === '12345') { 
-                document.getElementById('loginBox').style.display = 'none';
-                document.getElementById('hubBox').style.display = 'block';
-                document.getElementById('erro').style.display = 'none';
-                document.getElementById('senha').value = ''; 
+                
+                // ANIMAÇÃO DE DESCRIPTOGRAFIA
+                inputSenha.disabled = true;
+                btn.disabled = true;
+                btn.classList.add('btn-loading');
+                erro.style.display = 'none';
+                
+                let progresso = 0;
+                btn.innerText = `[ Descriptografando... ${progresso}% ]`;
+                
+                let intervaloLoading = setInterval(() => {
+                    progresso += Math.floor(Math.random() * 15) + 5; // Pulos aleatórios
+                    
+                    if (progresso >= 100) {
+                        progresso = 100;
+                        clearInterval(intervaloLoading);
+                        btn.innerText = `[ ACESSO LIBERADO ]`;
+                        
+                        // Aguarda meio segundo e abre o Hub
+                        setTimeout(() => {
+                            document.getElementById('loginBox').style.display = 'none';
+                            document.getElementById('hubBox').style.display = 'block';
+                            
+                            // Reseta o botão pro estado original
+                            inputSenha.value = ''; 
+                            inputSenha.disabled = false;
+                            btn.disabled = false;
+                            btn.classList.remove('btn-loading');
+                            btn.innerText = 'Autenticar';
+                            tentativasErradas = 0; 
+                        }, 600);
+                        
+                    } else {
+                        btn.innerText = `[ Descriptografando... ${progresso}% ]`;
+                    }
+                }, 150);
+
             } else {
-                document.getElementById('erro').style.display = 'block';
-                document.getElementById('senha').value = ''; 
-                document.getElementById('senha').focus();
+                // SE ERRAR A SENHA
+                tentativasErradas++;
+                inputSenha.value = ''; 
+                
+                if (tentativasErradas >= 3) {
+                    iniciarLockdown();
+                } else {
+                    erro.style.display = 'block';
+                    erro.innerText = `> ACESSO NEGADO: Credenciais inválidas.\n> Tentativas restantes: ${3 - tentativasErradas}`;
+                    inputSenha.focus();
+                }
             }
+        }
+
+        function iniciarLockdown() {
+            sistemaBloqueado = true;
+            matrixColor = 'rgba(255, 51, 102, 0.5)'; // Matrix fica vermelha
+            
+            document.getElementById('senha').disabled = true;
+            document.getElementById('btnAcessar').disabled = true;
+            document.getElementById('relogio').style.display = 'none'; // Esconde relógio
+            
+            var erro = document.getElementById('erro');
+            erro.style.display = 'block';
+            erro.classList.add('alerta-invasao');
+            
+            let tempoRestante = 15;
+            
+            let timerLock = setInterval(() => {
+                erro.innerText = `[ ALERTA DE INVASÃO ]\nSISTEMA BLOQUEADO POR ${tempoRestante}S`;
+                tempoRestante--;
+                
+                if (tempoRestante < 0) {
+                    clearInterval(timerLock);
+                    liberarLockdown();
+                }
+            }, 1000);
+            
+            erro.innerText = `[ ALERTA DE INVASÃO ]\nSISTEMA BLOQUEADO POR 15S`;
+        }
+
+        function liberarLockdown() {
+            sistemaBloqueado = false;
+            tentativasErradas = 0;
+            matrixColor = 'rgba(181, 53, 246, 0.4)'; // Volta Matrix para Roxo
+            
+            document.getElementById('senha').disabled = false;
+            document.getElementById('btnAcessar').disabled = false;
+            document.getElementById('relogio').style.display = 'block'; // Mostra relógio
+            
+            var erro = document.getElementById('erro');
+            erro.classList.remove('alerta-invasao');
+            erro.style.display = 'none';
+            
+            document.getElementById('senha').focus();
+            
+            // Retoma a animação do campo de texto
+            clearTimeout(typeTimeout);
+            animarPlaceholder();
         }
 
         function bloquearSistema() {
             document.getElementById('hubBox').style.display = 'none';
             document.getElementById('loginBox').style.display = 'block';
+            tentativasErradas = 0;
             document.getElementById('senha').focus(); 
         }
 
@@ -421,6 +591,7 @@
             atualizarRelogio();
             setInterval(atualizarRelogio, 1000); 
             definirSaudacao(); 
+            animarPlaceholder(); // Inicia o texto fantasma
 
             document.getElementById("btnAcessar").addEventListener("click", verificarSenha);
             document.getElementById("senha").addEventListener("keypress", function(event) {
