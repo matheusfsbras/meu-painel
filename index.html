@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Acesso Restrito - MFS BRÁS</title>
+    <title>Acesso Restrito - Arquivos</title>
     
     <!-- Ajustado para logo.png -->
     <link rel="icon" type="image/png" href="logo.png">
@@ -434,11 +434,11 @@
         function definirSaudacao() {
             var horas = new Date().getHours();
             if (horas >= 5 && horas < 12) {
-                textoSaudacao = "> Bom dia!\n> Sistema operando online_";
+                textoSaudacao = "> Bom dia!\n> Sistema online_";
             } else if (horas >= 12 && horas < 18) {
-                textoSaudacao = "> Boa tarde!\n> Sistema operando online_";
+                textoSaudacao = "> Boa tarde!\n> Sistema online_";
             } else {
-                textoSaudacao = "> Boa noite!\n> Sistema operando online_";
+                textoSaudacao = "> Boa noite!\n> Sistema online_";
             }
             digitarTexto();
         }
