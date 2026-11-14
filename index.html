@@ -106,3 +106,37 @@
         button:hover { 
             background-color: #00ff88; 
             color: #000;
+            border-color: #00ff88;
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+        }
+        
+        #erro { 
+            color: #ff3333; 
+            display: none; 
+            margin-top: 15px; 
+            font-size: 13px; 
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrixCanvas"></canvas>
+
+    <div class="login-box">
+        <div id="relogio">00:00:00</div>
+        <div id="saudacao"></div>
+        
+        <div class="input-container">
+            <input type="password" id="senha" placeholder="Chave de acesso" autofocus>
+            <span class="toggle-senha" id="olho" onclick="alternarSenha()">👁️</span>
+        </div>
+        
+        <button id="btnAcessar">Autenticar</button>
+        <div id="erro">> ACESSO NEGADO: Credenciais inválidas.</div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth
