@@ -26,6 +26,7 @@
             z-index: -1; 
         }
 
+        /* CAIXA DE LOGIN */
         .login-box { 
             background: rgba(21, 21, 21, 0.9); 
             padding: 40px 30px; 
@@ -35,6 +36,7 @@
             border: 1px solid #2a2a2a;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(4px); 
+            transition: opacity 0.5s ease, transform 0.5s ease;
         }
 
         #relogio {
@@ -117,12 +119,137 @@
             font-size: 13px; 
             font-family: monospace;
         }
+
+        /* =========================================
+           TELA DO HUB DE ARQUIVOS COM ROLAGEM
+           ========================================= */
+        #hubBox {
+            display: none; 
+            background: rgba(21, 21, 21, 0.9); 
+            padding: 30px 40px; 
+            border-radius: 8px; 
+            text-align: center; 
+            width: 750px; /* Mais largo para a grade de botões */
+            max-width: 90%;
+            max-height: 85vh; /* Limita a altura para não sumir da tela */
+            overflow-y: auto; /* Adiciona barra de rolagem */
+            border: 1px solid #2a2a2a;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px); 
+            animation: surgir 0.5s ease;
+        }
+
+        /* Estilização da barra de rolagem do Matrix */
+        #hubBox::-webkit-scrollbar {
+            width: 8px;
+        }
+        #hubBox::-webkit-scrollbar-track {
+            background: #111; 
+            border-radius: 4px;
+        }
+        #hubBox::-webkit-scrollbar-thumb {
+            background: #333; 
+            border-radius: 4px;
+        }
+        #hubBox::-webkit-scrollbar-thumb:hover {
+            background: #00ff88; 
+        }
+
+        @keyframes surgir {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .hub-header h3 {
+            color: #00ff88;
+            font-family: monospace;
+            margin-top: 0;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .hub-header p {
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        /* Títulos das Categorias */
+        .section-title {
+            color: #00ff88;
+            font-family: monospace;
+            font-size: 15px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+            padding-bottom: 8px;
+            margin: 30px 0 15px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-title:first-of-type {
+            margin-top: 10px; /* Reduz margem do primeiro título */
+        }
+
+        /* Grade Inteligente (Responsive Grid) */
+        .grid-botoes {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        /* Estilo dos botões menores e organizados */
+        .btn-arquivo {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            border: 1px solid #333;
+            padding: 12px 10px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-family: monospace;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 8px;
+            transition: all 0.3s ease;
+            text-align: left;
+            word-break: break-word;
+        }
+
+        .btn-arquivo span {
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .btn-arquivo:hover {
+            background-color: #00ff88;
+            color: #000;
+            border-color: #00ff88;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 255, 136, 0.2);
+        }
+
+        /* Botão vermelho de sair */
+        .btn-sair {
+            background-color: transparent;
+            color: #ff3333;
+            border: 1px solid #ff3333;
+            margin-top: 40px;
+        }
+
+        .btn-sair:hover {
+            background-color: #ff3333;
+            color: #000;
+            box-shadow: 0 0 10px rgba(255, 51, 51, 0.4);
+        }
     </style>
 </head>
 <body>
     <canvas id="matrixCanvas"></canvas>
 
-    <div class="login-box">
+    <!-- TELA 1: LOGIN -->
+    <div class="login-box" id="loginBox">
         <div id="relogio">00:00:00</div>
         <div id="saudacao"></div>
         
@@ -135,44 +262,91 @@
         <div id="erro">> ACESSO NEGADO: Credenciais inválidas.</div>
     </div>
 
+    <!-- TELA 2: HUB DE ARQUIVOS -->
+    <div id="hubBox">
+        <div class="hub-header">
+            <h3>> ACESSO CONCEDIDO_</h3>
+            <p>Repositório de ferramentas e sistemas operacionais</p>
+        </div>
+
+        <!-- CATEGORIA 1: PROGRAMAS -->
+        <div class="section-title">📁 Programas Essenciais</div>
+        <div class="grid-botoes">
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🎨</span> ADOBE ILLUSTRATOR 2022</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🖼️</span> ADOBE PHOTOSHOP 2020</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🖼️</span> ADOBE PHOTOSHOP 2023</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🖼️</span> ADOBE PHOTOSHOP CC 2015</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🎬</span> ADOBE PREMIERE PRO 2022</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🎬</span> ADOBE PREMIERE PRO 2026</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>📕</span> ADOBE READER PDF</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>⚙️</span> ALL IN ONE RUNTIMES</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🔑</span> ATIVADOR WINDOWS</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🖌️</span> CANVA DESKTOP</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>💻</span> CPU-Z</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>💽</span> CRYSTAL DISK INFO</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🌐</span> DRIVERPACK OFFLINE REDES</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🌐</span> DRIVERPACK ONLINE</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🗄️</span> EASEUS PARTITION MASTER</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🦊</span> FOXIT READER PDF</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🌍</span> GOOGLE CHROME OFFLINE</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🌡️</span> HW MONITOR TEMP</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>⬇️</span> INTERNET DOWNLOAD MANAGER IDM</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>📊</span> MICROSOFT OFFICE 2007</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>📊</span> MICROSOFT OFFICE 2016</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>📊</span> MICROSOFT OFFICE 2024</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🔥</span> MSI AFTER BURNER</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>📸</span> PHOTO SCAPE</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>💿</span> RUFUS</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🎞️</span> VEGAS PRO 18</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>▶️</span> VLC PLAYER</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>📚</span> WINRAR CRACKEADO</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>📦</span> WINRAR SETUP</a>
+        </div>
+
+        <!-- CATEGORIA 2: SISTEMAS OPERACIONAIS -->
+        <div class="section-title">💻 Sistemas Operacionais</div>
+        <div class="grid-botoes">
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🐧</span> LINUX MINT 22.3 CINNAMON</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🐧</span> LINUX UBUNTU 26.04</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🪟</span> WINDOWS 7</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🪟</span> WINDOWS 8.1</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🪟</span> WINDOWS 10 LITE</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🪟</span> WINDOWS 10</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🪟</span> WINDOWS 11 PRO</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🪟</span> WINDOWS REUNION 7</a>
+            <a href="LINK_AQUI" target="_blank" class="btn-arquivo"><span>🪟</span> WINDOWS XP SP3</a>
+        </div>
+
+        <button class="btn-sair" onclick="bloquearSistema()">[ ENCERRAR SESSÃO ]</button>
+    </div>
+
     <script>
         const canvas = document.getElementById('matrixCanvas');
         const ctx = canvas.getContext('2d');
-
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-
         const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*'.split('');
         const fontSize = 14;
         const colunas = canvas.width / fontSize; 
-        
         const drops = [];
-        for (let x = 0; x < colunas; x++) {
-            drops[x] = 1;
-        }
+        for (let x = 0; x < colunas; x++) { drops[x] = 1; }
 
         function desenharMatrix() {
-            // Aumentado de 0.05 para 0.1 para apagar o rastro mais rápido
             ctx.fillStyle = 'rgba(5, 5, 5, 0.1)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Alterado de '#00ff88' para uma versão com 40% de opacidade
             ctx.fillStyle = 'rgba(0, 255, 136, 0.4)'; 
             ctx.font = fontSize + 'px monospace';
             
             for (let i = 0; i < drops.length; i++) {
                 const texto = caracteres[Math.floor(Math.random() * caracteres.length)];
                 ctx.fillText(texto, i * fontSize, drops[i] * fontSize);
-                
                 if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
                     drops[i] = 0;
                 }
                 drops[i]++;
             }
         }
-        
         setInterval(desenharMatrix, 33);
-        
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
@@ -212,7 +386,6 @@
         function alternarSenha() {
             var campoSenha = document.getElementById("senha");
             var iconeOlho = document.getElementById("olho");
-            
             if (campoSenha.type === "password") {
                 campoSenha.type = "text";
                 iconeOlho.style.color = "#00ff88"; 
@@ -224,13 +397,24 @@
 
         function verificarSenha() {
             var senhaDigitada = document.getElementById('senha').value;
+            
+            // SENHA DEFINIDA AQUI: 12345
             if (senhaDigitada === '12345') { 
-                window.location.href = 'https://i.ibb.co/GXw2ZC8/8fa40e6f-7ee2-4b0b-a1cb-a2fe927031f7.jpg';
+                document.getElementById('loginBox').style.display = 'none';
+                document.getElementById('hubBox').style.display = 'block';
+                document.getElementById('erro').style.display = 'none';
+                document.getElementById('senha').value = ''; 
             } else {
                 document.getElementById('erro').style.display = 'block';
                 document.getElementById('senha').value = ''; 
                 document.getElementById('senha').focus();
             }
+        }
+
+        function bloquearSistema() {
+            document.getElementById('hubBox').style.display = 'none';
+            document.getElementById('loginBox').style.display = 'block';
+            document.getElementById('senha').focus(); 
         }
 
         window.onload = function() {
